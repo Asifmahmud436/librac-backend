@@ -6,3 +6,4 @@ urlpatterns = [
     path('login/',views.LoginAPIView.as_view(),name='user-login'),
     path('logout/',views.LogoutAPIView.as_view(),name='user-logout'),
 ]
+# can import the loginview and logoutview from the dj-rest-auth
