@@ -1,2 +1,2 @@
-admin name = admin 
-admin password = 123
+admin name = admin ,
+admin password = 123 ,
