@@ -11,7 +11,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         ('Teacher','Teacher'),
     )
 
-    user_type = serializers.CharField(choices=USER_ROLES_FIELD)
+    user_type = serializers.CharField()
 
     # retrieving and overriding the date in our registration serializer.the "" is for the default empty string
     def get_cleaned_data(self):
@@ -28,8 +28,8 @@ class CustomRegisterSerializer(RegisterSerializer):
     
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.Charfield(required=True,max_length=120)
-    password = serializers.Charfield(required=True,max_length=120)
+    username = serializers.CharField(required = True)
+    password = serializers.CharField(required = True)
 
 class UserAccountSerializer(serializers.ModelSerializer):
     class Meta:

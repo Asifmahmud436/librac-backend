@@ -8,11 +8,11 @@ class Teacher(models.Model):
     )
 
     user = models.OneToOneField(CustomUser,on_delete=models.CASCADE,related_name='teacher')
-    phone_no = models.IntegerField()
+    phone_no = models.IntegerField(blank=True,null=True)
     librac_id = models.IntegerField(unique=True)
-    designation = models.CharField(max_length=60,choices=DESIGNAION_FIELDS)
-    address = models.TextField()
+    address = models.TextField(blank=True,null=True)
     image = models.ImageField(upload_to='teachers/images/',blank=True,null=True)
+    designation = models.CharField(max_length=60,choices=DESIGNAION_FIELDS)
 
     def __str__(self):
         return self.user.username

@@ -36,23 +36,26 @@ class UserDetailView(APIView):
 class LoginAPIView(APIView):
     serializer_class = LoginSerializer
 
-    def post(self,request):
-        serialized_data = self.serializer_class(data=request.data)
+    def post(self, request):
+        serialized_data = self.serializer_class(data = request.data)
 
         if serialized_data.is_valid():
             username = serialized_data.validated_data['username']
-            password = serialized_data.validated_data['username']
-            user = authenticate(username = username,password = password)
+            password = serialized_data.validated_data['password']
+            user = authenticate(username = username, password = password)
 
             if user:
-                token, _ = Token.objects.get_or_create(user = user)   
+                # The method get_or_create returns a tuple containing two elements
+                token, _ = Token.objects.get_or_create(user = user)
+                print(token)    # getting token
+                print(_)    # indicates whether the token_object was created or not
                 login(request, user)
                 return Response({'token': token.key, 'user_id': user.id})
             else:
                 return Response({'error': 'Invalid credential'})
         
         return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class LogoutAPIView(APIView):
     def get(self,request):
