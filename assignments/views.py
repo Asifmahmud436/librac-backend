@@ -14,7 +14,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         if course_id:
             queryset = queryset.filter(course_id=course_id)
         if course_name:
-            queryset = queryset.filtere(course_name=course_name)
+            queryset = queryset.filter(course_name=course_name)
         return queryset
 
 

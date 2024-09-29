@@ -18,7 +18,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 
 # to implement email sending functionality
-from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 
@@ -34,10 +34,6 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
-
-
-
-# Creating user registration functionality
 class StudentRegistrationAPIView(APIView):
     serializer_class = StudentRegistrationSerializer
 
@@ -47,18 +43,10 @@ class StudentRegistrationAPIView(APIView):
 
         if serialized_data.is_valid():
             user = serialized_data.save()
-            print(user)
-
-
-            # creating a token for the user
             token = default_token_generator.make_token(user)
             print('token :', token)
-
-            # creating an unique url by using the decoded string of the users unique user id such as 'pk' 
             user_id = urlsafe_base64_encode(force_bytes(user.pk))
             print('user_id :', user_id)
-
-            # creating a confirm link (using local domain)
             confirm_link = f'http://127.0.0.1:8000/students/active/{user_id}/{token}/'
             
             # creating a confirm link (using live DRF domain)

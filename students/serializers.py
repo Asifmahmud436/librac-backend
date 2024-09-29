@@ -1,19 +1,24 @@
 from rest_framework import serializers
 from .models import Student
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','email','user_type']
+        fields = ['id','username','first_name','last_name','email','user_type']
+
+        
 
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+
     class Meta:
         model = Student
         fields = '__all__'
+
 
 class StudentRegistrationSerializer(serializers.ModelSerializer):
     librac_id = serializers.IntegerField()
