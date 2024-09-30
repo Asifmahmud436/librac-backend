@@ -34,6 +34,14 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        student_name = self.request.query_params.get('student_name')
+        if student_name:
+            queryset = queryset.filter(user__username__icontains=student_name)
+        return queryset
+
+
 class StudentRegistrationAPIView(APIView):
     serializer_class = StudentRegistrationSerializer
 

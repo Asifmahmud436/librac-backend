@@ -34,6 +34,13 @@ class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        teacher_name = self.request.query_params.get('teacher_name')
+        if teacher_name:
+            queryset = queryset.filter(user__username__icontains=teacher_name)
+        return queryset
+
 
 
 
