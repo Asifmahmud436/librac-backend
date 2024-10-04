@@ -43,18 +43,29 @@ class LoginAPIView(APIView):
             username = serialized_data.validated_data['username']
             password = serialized_data.validated_data['password']
             user = authenticate(username = username, password = password)
+            
+            try:
+                user2 = User._default_manager.get(username=username)
+            except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+                user2 = None
 
-            if user:
-                # The method get_or_create returns a tuple containing two elements
-                token, _ = Token.objects.get_or_create(user = user)
-                print(token)    # getting token
-                print(_)    # indicates whether the token_object was created or not
-                login(request, user)
-                return Response({'token': token.key, 'user_id': user.id})
+            if user2 is not None:
+                if user2.is_active:
+                    if user is not None:
+                        token, _ = Token.objects.get_or_create(user=user)
+                        login(request, user)
+                        return Response({'token': token.key, 'user_id': user.id})
+                    else:
+                        return Response({'error': "Invalid password. Please try again."})
+                else:
+                    return Response(
+                        {'error': "Your account is not activated. Please check your email for the activation link."}
+                    )
             else:
-                return Response({'error': 'Invalid credential'})
-        
-        return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {'error': "Invalid Username. Please try again."}
+                )
+        return Response(serialized_data.errors)
 
 
 class LogoutAPIView(APIView):

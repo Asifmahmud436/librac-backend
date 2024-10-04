@@ -3,10 +3,10 @@ from rest_framework.routers import DefaultRouter
 from .views import StudentDataByUserIDView,StudentRegistrationAPIView,StudentViewSet,activate
 
 
-# Create a router
+# making a router
 router = DefaultRouter()
 
-# register ViewSets with the router.
+# registering ViewSets with the router.
 router.register('list', StudentViewSet)
 
 
