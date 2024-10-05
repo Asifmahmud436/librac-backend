@@ -1,2 +1,2 @@
-admin name = admin ,
+admin name = Sruth ,
 admin password = 123 ,
