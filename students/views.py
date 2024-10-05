@@ -55,14 +55,7 @@ class StudentRegistrationAPIView(APIView):
             print('token :', token)
             user_id = urlsafe_base64_encode(force_bytes(user.pk))
             print('user_id :', user_id)
-            confirm_link = f'http://127.0.0.1:8000/students/active/{user_id}/{token}/'
-            
-            # creating a confirm link (using live DRF domain)
-            # confirm_link = f'https://job-portal-system-backend.onrender.com/employer/active/{user_id}/{token}/'
-            
-
-
-            # email sending implementation
+            confirm_link = f'https://librac-backend.vercel.app/students/active/{user_id}/{token}/'
             email_subject = 'Confirm Your Account'
             email_body = render_to_string('student_confirmation.html', {
                 'user': user,
