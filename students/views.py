@@ -5,19 +5,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-
-
 from .models import Student
 from .serializers import StudentRegistrationSerializer,StudentSerializer
-
-
-# necessary importing for confirmation link generating
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode 
 from django.utils.encoding import force_bytes
-
-# to implement email sending functionality
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
@@ -73,11 +66,6 @@ class StudentRegistrationAPIView(APIView):
         return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
-
-
-# creating a function to decode the confirmation link for activating the user account
 def activate(request, user_id, token):
     try:
         user_id = urlsafe_base64_decode(user_id).decode()
@@ -93,12 +81,6 @@ def activate(request, user_id, token):
         return redirect('student_register')
 
 
-
-
-
-
-
-# to get the specific job_seeker object data by an user_id
 class StudentDataByUserIDView(APIView):
     permission_classes = [AllowAny]
 

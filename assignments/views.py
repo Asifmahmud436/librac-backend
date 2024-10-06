@@ -16,19 +16,12 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         teacher_username = self.request.query_params.get('teacher_username')
         student_username = self.request.query_params.get('student_username')
 
-        # Filter assignments based on student username
         if student_username:
             try:
-                # Fetch the student based on the provided username
                 student = Student.objects.get(user__username=student_username)
-                
-                # Fetch the IDs of all the courses the student is enrolled in
                 enrolled_courses = student.dashboard.filter(drop_course=False).values_list('course_id', flat=True)
-                
-                # Filter assignments based on the student's enrolled courses
                 queryset = queryset.filter(course_id__in=enrolled_courses)
             except Student.DoesNotExist:
-                # If the student does not exist, return an empty queryset
                 return Assignment.objects.none()
 
         
