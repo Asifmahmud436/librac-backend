@@ -14,7 +14,11 @@ ALLOWED_HOSTS = ["127.0.0.1",".vercel.app"]
 
 
 # Application definition
-
+# pip install djangorestframework
+# pip install djangorestframework-authtoken
+# pip install dj-rest-auth
+# pip install django-allauth
+# pip install django-cors-headers
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     'django.contrib.admin',
